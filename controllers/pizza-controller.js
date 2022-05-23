@@ -10,7 +10,7 @@ const pizzaController = {
         });
     },
 
-    getPizzaByiD({ params }, res) {
+    getPizzaById({ params }, res) {
         Pizza.findOne({ _id: params.id })
         .then(dbPizzaData => {
             if (!dbPizzaData) {
