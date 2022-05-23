@@ -43,8 +43,9 @@ const PizzaSchema = new Schema(
 );
 
 //VIRTUALS | (GETS TOTAL COUN TO FCOMMETNS AND REPLIES ON RETRIEVAL)
+//reduce is it adds up the values and you can divide by the length of the array to get the SUM or the average
 PizzaSchema.virtual("commentCount").get(function () {
-    return this.comments.length;
+    return this.comments.reduce((total, comment) => total + comment.replies.length + 1, 0);
 });
 
 //Creates the Pizza model using the PizzaSchema
