@@ -3,6 +3,16 @@ const { Pizza } = require("../models");
 const pizzaController = {
     getAllPizza(req, res) {
         Pizza.find({})
+        //POPULATE THE ACTUALS COMMENTS RATHER THAN JUST THE ID
+        .populate({
+            path: "comments",
+            // the minus "-" on the "_V" is stating we don't want to return this field
+            select: "-_v"
+        })
+        //removes "_v" from being included in the data
+        .select("-_v")
+        //sorts from newest to oldest per timestamp
+        .sort({ _id: -1 })
         .then(dbPizzaData => res.json(dbPizzaData))
         .catch( err => {
             console.log(err);
@@ -12,6 +22,11 @@ const pizzaController = {
 
     getPizzaById({ params }, res) {
         Pizza.findOne({ _id: params.id })
+        .populate({
+            path: "comments",
+            select: "-_v"
+        })
+        .select("-_v")
         .then(dbPizzaData => {
             if (!dbPizzaData) {
                 res.status(404).json({ message: "No Pizza Found With This ID!" });
