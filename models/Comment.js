@@ -61,5 +61,4 @@ CommentSchema.virtual("replyCount").get(function () {
 
 //Creates the Comment model using the CommentSchema
 const Comment = model("Comment", CommentSchema);
-const Reply = model("Reply", ReplySchema);
-module.exports = { Comment, Reply };
+module.exports = Comment;
